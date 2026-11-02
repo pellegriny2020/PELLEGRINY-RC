@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101010">
+<meta name="description" content="PELLEGRINY RC - análise inteligente de entregas para motoboys">
+<link rel="manifest" href="manifest.webmanifest">
+<title>PELLEGRINY RC</title>
+<style>
+:root{--bg:#0b0b0d;--panel:#17171b;--panel2:#202026;--red:#f02b3a;--red2:#b91525;--white:#f7f7f8;--muted:#a5a5ad;--line:#303037;--green:#39d98a;--yellow:#ffc857}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(160deg,#171014 0%,var(--bg) 40%);color:var(--white);font:16px system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
+header{padding:24px 18px 18px;border-bottom:1px solid var(--line);background:#101013eF;position:sticky;top:0;z-index:3;backdrop-filter:blur(12px)}
+.brand{display:flex;align-items:center;gap:12px}.mark{width:46px;height:46px;border-radius:13px;background:linear-gradient(145deg,var(--red),#780b17);display:grid;place-items:center;font-weight:950;font-style:italic;font-size:18px;box-shadow:0 6px 22px #f02b3a44}
+h1{font-size:20px;letter-spacing:1.5px;margin:0;font-weight:900}header p{margin:3px 0 0;color:var(--muted);font-size:12px;letter-spacing:.8px}
+main{max-width:720px;margin:auto;padding:18px 14px 40px}.card{background:linear-gradient(145deg,#1b1b20,#141418);border:1px solid var(--line);border-radius:18px;padding:17px;margin-bottom:14px;box-shadow:0 10px 28px #0003}
+.card h2{font-size:15px;margin:0 0 14px;letter-spacing:.6px}.eyebrow{font-size:11px;color:var(--red);font-weight:800;letter-spacing:1.5px;margin-bottom:6px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}.field label{font-size:12px;color:#c9c9ce;font-weight:650}.field input{width:100%;background:#0d0d10;border:1px solid #3a3a42;border-radius:11px;padding:13px;color:white;font:inherit;outline:none}.field input:focus{border-color:var(--red);box-shadow:0 0 0 3px #f02b3a22}
+button{border:0;border-radius:12px;background:linear-gradient(135deg,var(--red),var(--red2));color:white;padding:14px 16px;font-size:14px;font-weight:850;letter-spacing:.3px;width:100%;cursor:pointer}button.secondary{background:#28282f;border:1px solid #42424b;color:#eee}button:active{transform:scale(.99)}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric{padding:14px;border-radius:13px;background:#101014;border:1px solid var(--line)}.metric small{display:block;color:var(--muted);font-size:11px}.metric strong{display:block;font-size:23px;margin-top:5px}.metric em{font-style:normal;color:var(--muted);font-size:11px}
+.status{padding:13px;border-radius:12px;margin-top:12px;font-weight:850;text-align:center;letter-spacing:.7px}.good{background:#123a2a;color:var(--green);border:1px solid #226344}.bad{background:#42151c;color:#ff7882;border:1px solid #762632}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}.hint{font-size:11px;color:var(--muted);line-height:1.5}.history-item{padding:12px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;font-size:13px}.history-item:last-child{border:0}.pill{font-size:10px;font-weight:850;padding:5px 8px;border-radius:99px;background:#292930;color:#ccc}.pill.ok{background:#123a2a;color:var(--green)}.section-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.section-top h2{margin:0}
+footer{text-align:center;color:#777;font-size:10px;padding:10px}
+@media(min-width:600px){main{padding-top:25px}.card{padding:20px}}
+</style>
+</head>
+<body>
+<header><div class="brand"><div class="mark">RC</div><div><h1>PELLEGRINY RC</h1><p>INTELIGÊNCIA PARA QUEM FAZ A ENTREGA</p></div></div></header>
+<main>
+  <section class="card">
+    <div class="eyebrow">PAINEL DE ANÁLISE</div>
+    <h2>Analise uma oferta</h2>
+    <div class="grid">
+      <div class="field"><label>Valor da entrega (R$)</label><input id="pay" type="number" min="0" step=".01" placeholder="Ex.: 12,50"></div>
+      <div class="field"><label>Tempo total (minutos)</label><input id="minutes" type="number" min="1" step="1" placeholder="Ex.: 35"></div>
+      <div class="field"><label>Você até o restaurante (km)</label><input id="pickup" type="number" min="0" step=".1" placeholder="Ex.: 2,5"></div>
+      <div class="field"><label>Restaurante até cliente (km)</label><input id="dropoff" type="number" min="0" step=".1" placeholder="Ex.: 4,0"></div>
+    </div>
+    <button id="analyze">ANALISAR ENTREGA</button>
+    <p class="hint">A distância total soma o deslocamento até o restaurante e o trajeto até o cliente. Informe o tempo total estimado para calcular o ganho por hora.</p>
+  </section>
+
+  <section class="card">
+    <div class="section-top"><h2>Resultado da análise</h2><span class="pill">AO VIVO</span></div>
+    <div class="metrics">
+      <div class="metric"><small>Pagamento por km</small><strong id="perKm">—</strong><em>R$/km total</em></div>
+      <div class="metric"><small>Ganho estimado por hora</small><strong id="perHour">—</strong><em>R$/hora</em></div>
+      <div class="metric"><small>Distância total</small><strong id="totalKm">—</strong><em>km</em></div>
+      <div class="metric"><small>Valor da oferta</small><strong id="totalPay">—</strong><em>valor bruto</em></div>
+    </div>
+    <div id="status" class="status" style="display:none">PREENCHA OS DADOS DA OFERTA</div>
+  </section>
+
+  <section class="card">
+    <div class="eyebrow">PERSONALIZE SEUS CRITÉRIOS</div>
+    <h2>Meus filtros</h2>
+    <div class="field"><label>Mínimo por quilômetro (R$)</label><input id="minKm" type="number" min="0" step=".01" value="2.00"></div>
+    <div class="field"><label>Mínimo por hora (R$)</label><input id="minHour" type="number" min="0" step=".01" value="25.00"></div>
+    <button class="secondary" id="saveSettings">SALVAR FILTROS</button>
+    <p class="hint">Os dois valores começam em R$ 2,00/km e R$ 25,00/h. Podem ser alterados livremente a partir de zero, sem teto definido. A oferta só será aprovada quando atingir os dois mínimos.</p>
+  </section>
+
+  <section class="card">
+    <div class="section-top"><h2>Histórico de análises</h2><button class="secondary" id="clearHistory" style="width:auto;padding:8px 11px;font-size:11px">LIMPAR</button></div>
+    <div id="history"><p class="hint">Suas análises aparecerão aqui neste aparelho.</p></div>
+  </section>
+  <footer>PELLEGRINY RC • Versão inicial de demonstração</footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const money=n=>Number.isFinite(n)?n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'}):'—';
+const num=id=>parseFloat($(id).value);
+let history=JSON.parse(localStorage.getItem('prc_history')||'[]');
+function loadSettings(){let s=JSON.parse(localStorage.getItem('prc_settings')||'{}');$('minKm').value=s.minKm??'2.00';$('minHour').value=s.minHour??'25.00'}
+function saveSettings(){let a=num('minKm'),b=num('minHour');if(!Number.isFinite(a)||!Number.isFinite(b)||a<0||b<0){alert('Informe valores iguais ou maiores que zero.');return}localStorage.setItem('prc_settings',JSON.stringify({minKm:a,minHour:b}));alert('Filtros salvos neste aparelho.')}
+function renderHistory(){$('history').innerHTML=history.length?history.slice(0,12).map(x=>`<div class="history-item"><div><b>${money(x.pay)}</b><div class="hint">${x.km.toFixed(1).replace('.',',')} km • ${x.minutes} min • ${money(x.kmRate)}/km</div></div><span class="pill ${x.ok?'ok':''}">${x.ok?'APROVADA':'FORA DO FILTRO'}</span></div>`).join(''):'<p class="hint">Suas análises aparecerão aqui neste aparelho.</p>'}
+function analyze(){let pay=num('pay'),minutes=num('minutes'),pickup=num('pickup'),drop=num('dropoff');if(![pay,minutes,pickup,drop].every(Number.isFinite)||pay<0||minutes<=0||pickup<0||drop<0){alert('Preencha todos os campos com valores válidos.');return}
+let km=pickup+drop;if(km<=0){alert('A distância total precisa ser maior que zero.');return}
+let kmRate=pay/km,hourRate=pay/(minutes/60),minKm=num('minKm'),minHour=num('minHour'),ok=kmRate>=minKm&&hourRate>=minHour;
+$('perKm').textContent=money(kmRate);$('perHour').textContent=money(hourRate);$('totalKm').textContent=km.toFixed(1).replace('.',',');$('totalPay').textContent=money(pay);
+$('status').style.display='block';$('status').className='status '+(ok?'good':'bad');$('status').textContent=ok?'✓ APROVADA — ATENDE AOS DOIS FILTROS':'✕ FORA DO CRITÉRIO — NÃO ATINGE OS DOIS MÍNIMOS';
+history.unshift({pay,minutes,km,kmRate,hourRate,ok,date:new Date().toISOString()});history=history.slice(0,50);localStorage.setItem('prc_history',JSON.stringify(history));renderHistory()}
+$('analyze').addEventListener('click',analyze);$('saveSettings').addEventListener('click',saveSettings);$('clearHistory').addEventListener('click',()=>{if(confirm('Apagar o histórico deste aparelho?')){history=[];localStorage.removeItem('prc_history');renderHistory()}});
+loadSettings();renderHistory();
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script>
+</body></html>

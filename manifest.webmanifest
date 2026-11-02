@@ -1,0 +1,10 @@
+{
+  "name": "PELLEGRINY RC",
+  "short_name": "PELLEGRINY RC",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0b0b0d",
+  "theme_color": "#101010",
+  "description": "Análise inteligente de entregas para motoboys",
+  "icons": []
+}

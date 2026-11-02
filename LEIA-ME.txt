@@ -1,0 +1,18 @@
+PELLEGRINY RC — versão inicial demonstrativa
+
+COMO TESTAR
+1. Extraia os arquivos.
+2. Abra index.html em um navegador para testar a calculadora.
+3. Para instalar como PWA no Android, publique os arquivos em um endereço HTTPS.
+4. No Chrome Android, abra o endereço e use o menu > Instalar app (ou Adicionar à tela inicial).
+
+O QUE JÁ FUNCIONA
+- Soma da distância: até o restaurante + restaurante até o cliente.
+- Cálculo de R$/km e R$/hora.
+- Filtros independentes, iniciando em R$ 2,00/km e R$ 25,00/h.
+- Filtros sem limite máximo fixo, com valor mínimo zero.
+- Aprovação somente se atingir os dois critérios.
+- Histórico local de análises no aparelho.
+
+LIMITAÇÃO IMPORTANTE
+Esta é a primeira versão de demonstração com preenchimento manual. Ela ainda NÃO lê automaticamente as ofertas do iFood, 99Food ou Keeta e não possui bolha flutuante nativa. Isso exige desenvolvimento Android nativo, permissões específicas e testes separados em cada plataforma. Não aceita nem recusa entregas automaticamente.
